@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="formStyle.css">
+    <title>Edit Food Entry</title>
+</head>
+<body>
+    <form>
+        <div>
+            <!-- id, Menu Item, Restaurant, Rating, Review. Img_url -->
+          <label>Restaurant:</label><br>
+          <input required type="text" id="restaurant" autofocus><br>
+          <label>Menu Item:</label><br>
+          <input required type="text" id="menu" autofocus><br>
+          <label>Image Url</label><br>
+          <input type="text" id="img" ><br>
+          <label for="rating">Rating:</label><br>
+          <input type="range" id="rating" name="rating" min="1" max="10"><br>
+          <label>Review</label><br>
+         <textarea name="review" id="review" cols="30" rows="10"></textarea>
+        </div>
+        <button type="submit">Update</button>
+      </form>
+  
+      <script>
+        const electron = require('electron')
+        const {ipcRenderer} = electron
+        const form = document.querySelector('form');
+        form.addEventListener('submit', submitForm);
+    
+        let foodUpdate;
+    
+        function updateFood(){
+            console.log(foodUpdate);
+            ipcRenderer.send('food:update', foodDelete);
+    
+        }
+      function submitForm(e){ 
+      
+        e.preventDefault(); 
+        const item = {
+          restaurant: document.querySelector('#restaurant').value,
+          menu_item: document.querySelector('#menu').value,
+          img_url:  document.querySelector('#img').value,
+          rating: document.querySelector('#rating').value,
+          review: document.querySelector('#review').value
+        }
+
+        ipcRenderer.send('food:update', item, foodUpdate);
+      }
+
+      ipcRenderer.on('item:add', function(e, food) {
+
+          foodUpdate = food.id;
+          document.querySelector('#restaurant').value = food.restaurant
+          document.querySelector('#menu').value = food.menu_item
+          document.querySelector('#img').value = food.img_url
+          document.querySelector('#rating').value = food.rating
+          document.querySelector('#review').value = food.review
+      })
+    </script>
+</body>
+</html>

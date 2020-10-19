@@ -1,0 +1,97 @@
+body{
+    background: rgb(249,112,112);
+    background: linear-gradient(180deg, rgba(249,112,112,1) 0%, rgba(255,227,134,1) 100%);
+
+
+}
+
+header{
+    margin-top: 1rem;
+    text-align: center;
+    font-family: "Inter", sans-serif;
+    color: white;
+    font-size: 1.5rem;
+}
+
+
+main {
+/* display: flex;
+  justify-content: center;
+  align-content: center; */
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto auto auto;
+  align-items: start;
+  grid-row-gap: 2rem;
+  padding: 3rem 6rem;
+  font-family: "Inter", sans-serif
+}
+.card {
+    background-color: white;
+    margin: 20px;
+    margin-bottom: 5px;
+    position: relative;
+    cursor: pointer;
+    border-radius: .4rem;
+    width: 320px;
+    box-shadow: 3px 0px 17px 5px rgba(0,0,0,0.13)
+    ;
+}
+.foodImg {
+    border-radius: .4rem .4rem 0 0;
+    display: block;
+    width: 100%;
+    height: 18rem;
+    object-fit: cover;
+}
+
+.card-body{
+    padding: 1rem;
+}
+.card-title {
+    font-size: 18px;
+    text-align: center;
+}
+.center {
+    text-align: center;
+}
+
+.buttons{
+    display: flex;
+    justify-content: flex-end;
+   padding: 10px;
+
+}
+  .edit {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  white-space: nowrap;
+  background: #7fde44;
+  border-radius: 11px;
+  border: 3px solid rgba(100%,100%,100%,0);
+  border-width: 3px 3px 3px 3px;
+  padding: 11px 13px 11px 13px;
+    color: #ffffff;
+  font-family: arial;
+  font-weight: 300;
+  font-style: normal;
+  margin-right: 5px;
+  }
+.delete {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap;
+    background: #de4444;
+    border-radius: 11px;
+    border: 3px solid rgba(100%,100%,100%,0);
+    border-width: 3px 3px 3px 3px;
+    padding: 11px 13px 11px 13px;
+      color: #ffffff;
+    font-family: arial;
+    font-weight: 300;
+    font-style: normal;
+    
+
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link rel="stylesheet" type="text/css" href="formStyle.css">
+        
+    <title>Create New Entry</title>
+  </head>
+  <body>
+    <form>
+      <div>
+          <!-- id, Menu Item, Restaurant, Rating, Review. Img_url -->
+        <label>Restaurant</label><br>
+        <input required type="text" pattern="^[^\s].*[^\s]$" id="restaurant" autofocus><br>
+        <label>Menu Item</label><br>
+        <input required type="text" pattern="^[^\s].*[^\s]$" id="menu"><br>
+        <label>Image Url</label><br>
+        <input required type="url" id="img" pattern="^[^\s].*[^\s]$"><br>
+        <label for="rating">Rating:</label><br>
+        <input type="range" value="5" id="rating" name="rating" min="1" max="10"><br>
+        <label>Review</label><br>
+       <textarea name="review" id="review" cols="30" rows="10"></textarea>
+      </div>
+      <button type="submit">Publish</button>
+    </form>
+
+  <script>
+    const electron = require('electron')
+    const {ipcRenderer} = electron
+    const form = document.querySelector('form');
+    form.addEventListener('submit', submitForm);
+
+
+    function submitForm(e) {
+      e.preventDefault(); 
+      const item = {
+        restaurant: document.querySelector('#restaurant').value,
+        menu_item: document.querySelector('#menu').value,
+        img_url:  document.querySelector('#img').value,
+        rating: document.querySelector('#rating').value,
+        review: document.querySelector('#review').value
+      }
+      ipcRenderer.send('item:add', item);
+     
+    }
+  </script>
+  </body>
+</html>

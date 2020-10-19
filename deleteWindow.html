@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Delete Entry</title>
+</head>
+<body>
+    Are you sure you want to delete this entry?
+    <button onclick=removeWine()>Yes</button>
+    <button onclick=closeWindow()>No</button>
+
+<script>
+    const electron = require('electron')
+    const {ipcRenderer} = electron
+
+    let wineDelete;
+
+    function removeFood(){
+        ipcRenderer.send('food:delete', foodDelete);
+
+    }
+    function closeWindow(){
+        ipcRenderer.send('window:close');
+    }
+
+    ipcRenderer.on('item:add', function(e, foodID) {
+
+        foodDelete = foodID;
+    })
+</script>
+</body>
+</html>

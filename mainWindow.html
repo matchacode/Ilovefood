@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<title>I Love Food</title>
+</head>
+<body>
+
+<header>
+  <img src="images/food-white.png" alt="food icon">
+  <h1>I Love Food!</h1>
+  <p>A Food Diary</p>
+</header>
+
+<main id="cardHolder">
+ 
+</main>
+
+
+<script>
+  // Variables
+  const electron = require('electron');
+  const {ipcRenderer} = electron;
+  const cardHolder = document.getElementById('cardHolder');
+
+  const {dialog} = require('electron').remote;
+
+
+  //catch username
+  ipcRenderer.on('user:name', function(e, name) {
+    document.getElementById('userName').innerText = name;
+  })
+
+  //catch add item
+  ipcRenderer.on('item:add', function(e,foods){
+ 
+    cardHolder.innerHTML = '';
+
+    foods.forEach(food => {
+
+      cardHolder.innerHTML += `
+        <div class="card">
+          <img class="foodImg" src="${food.img_url}" alt="">
+          <div class="card-body">
+            <h1 class="card-title">${food.menu_item}</h1>
+            <h2 class="center">${food.restaurant}</h2>
+            <h3 class="center">Rating ${food.rating}/10</h3>
+            <span class="card-title">${food.review}</span>
+           
+           </div>
+           <div class="buttons">
+            <button class="edit" type="type" id="editor" onclick="editFood(${food.id})">Edit</button>
+            <button class="delete" type="button" id='deleter' onclick="deleteFood(${food.id})"">Delete</button>
+            </div>
+        </div>
+        `;
+    });
+
+  });
+
+  function deleteFood(foodId) {
+        console.log(foodId);
+
+        const dialogOptions = {type: 'error', title: 'Delete Food', buttons: ['OK', 'Cancel'], message: 'Are you sure?'}
+
+        dialog.showMessageBox(dialogOptions, i => {
+            if(i === 0) {
+                ipcRenderer.send('item:delete', foodId);
+            }
+        })
+      }
+
+      function editFood(foodId){
+        ipcRenderer.send('item:update', foodId);
+      }
+
+      function removeItem(e){
+        e.target.remove();
+      }
+      function updateFood(id){
+        console.log(id)
+
+        //item clear
+      ipcRenderer.send('item:update', id);
+      }
+
+    </script>
+
+  </body>
+</html>
